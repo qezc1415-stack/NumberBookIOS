@@ -1,4 +1,4 @@
-name: NumberBook iOS Build
+name: NumberBook IPA
 
 on:
   workflow_dispatch:
@@ -6,15 +6,12 @@ on:
 jobs:
   build:
     runs-on: macos-latest
-
     steps:
-      - name: Download project
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Locate Xcode project
+      - name: Inspect repository
         run: |
-          find . -name "*.xcodeproj" -o -name "*.xcworkspace"
-
-      - name: Show Xcode schemes
-        run: |
-          xcodebuild -list -project NumberBookIOS.xcodeproj
+          echo "Current directory:"
+          pwd
+          echo "Files:"
+          find . -maxdepth 4 -print
