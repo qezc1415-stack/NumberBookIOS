@@ -6,14 +6,20 @@ on:
 jobs:
   build:
     runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Find project
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check project location
         run: |
+          pwd
+          ls -la
           find . -name "*.xcodeproj" -print
 
-      - name: Build IPA
+      - name: Inspect project
         run: |
           PROJECT=$(find . -name "NumberBookIOS.xcodeproj" -print -quit)
+          echo "Project path: $PROJECT"
+          test -n "$PROJECT"
           xcodebuild -list -project "$PROJECT"
