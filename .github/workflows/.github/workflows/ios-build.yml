@@ -1,3 +1,4 @@
+
 name: NumberBook IPA
 
 on:
@@ -6,12 +7,23 @@ on:
 jobs:
   build:
     runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Inspect repository
+    steps:
+      - name: Download project
+        uses: actions/checkout@v4
+
+      - name: Find Xcode project
         run: |
-          echo "Current directory:"
-          pwd
-          echo "Files:"
-          find . -maxdepth 4 -print
+          echo "Searching for Xcode project..."
+          find . -name "*.xcodeproj" -print
+          echo "Repository files:"
+          find . -maxdepth 5 -print
+
+      - name: Show Xcode schemes
+        run: |
+          PROJECT=$(find . -name "NumberBookIOS.xcodeproj" -print -quit)
+          if [ -z "$PROJECT" ]; then
+            echo "ERROR: Xcode project not found"
+            exit 1
+          fi
+          xcodebuild -list -project "$PROJECT"
