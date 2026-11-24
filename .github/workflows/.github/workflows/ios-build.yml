@@ -6,24 +6,12 @@ on:
 jobs:
   build:
     runs-on: macos-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Locate Xcode project
+      - name: Inspect repository
         run: |
-          echo "Repository files:"
-          ls -la
-          echo "Searching for project:"
-          find . -name "*.xcodeproj" -print
-
-      - name: Show Xcode schemes
-        run: |
-          PROJECT=$(find . -name "NumberBookIOS.xcodeproj" -print -quit)
-          if [ -z "$PROJECT" ]; then
-            echo "Project not found"
-            exit 1
-          fi
-          echo "Found: $PROJECT"
-          xcodebuild -list -project "$PROJECT"
+          echo "Current directory:"
+          pwd
+          echo "Files:"
+          find . -maxdepth 4 -print
