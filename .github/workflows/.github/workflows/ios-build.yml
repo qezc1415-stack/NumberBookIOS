@@ -7,10 +7,12 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Extract project
-        run: unzip -o NumberBookIOS_starter.zip -d project
+      - name: Find project
+        run: |
+          find . -name "*.xcodeproj" -o -name "*.xcworkspace"
 
-      - name: Find Xcode project
-        run: find project -name "*.xcodeproj"
+      - name: Show files
+        run: ls -la
