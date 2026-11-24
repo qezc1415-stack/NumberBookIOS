@@ -1,0 +1,20 @@
+name: NumberBook iOS Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Download project
+        uses: actions/checkout@v4
+
+      - name: Locate Xcode project
+        run: |
+          find . -name "*.xcodeproj" -o -name "*.xcworkspace"
+
+      - name: Show Xcode schemes
+        run: |
+          xcodebuild -list -project NumberBookIOS.xcodeproj
